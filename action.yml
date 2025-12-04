@@ -1,0 +1,57 @@
+name: 'JaCoCo XML to Markdown'
+author: 'de-taylor-scb'
+description: 'Convert the Pester coverage.xml file (JaCoCo schema) to Markdown for display on GitHub.'
+branding:
+  icon: 'code'
+  color: 'blue'
+inputs:
+  path:
+    description: 'Specifies the path for the coverage.xml file to convert to Markdown.'
+    required: true
+    default: '.\_results\coverage.xml'
+  output:
+    description: 'Specifies the location of the Markdown output file.'
+    required: true
+    default: '.\_results\coverage.md'
+  title:
+    description: 'Specifies the title of the Markdown Report. For example, providing the repository name. Defaults to "Code Coverage (JaCoCo)".'
+    required: false
+    default: 'Code Coverage (JaCoCo)'
+  maxHeadingLevel:
+    description: 'The topmost heading that should be included in the report. e.g. 1 for H1 (#), 2 for H2 (##), and so on. All other headings will be placed relative to the top level. Defaults to 3 (###).'
+    required: false
+    default: '3'
+  minLinePercent:
+    description: 'Specifies the minimum coverage threshold for lines. If the actual coverage is below this threshold, the action will fail.'
+    required: false
+    default: '0.0'
+  minInstructionPercent:
+    description: 'Specifies the minimum coverage threshold for instructions. If the actual coverage is below this threshold, the action will fail.'
+    required: false
+    default: '0.0'
+  minMethodPercent:
+    description: 'Specifies the minimum coverage threshold for methods. If the actual coverage is below this threshold, the action will fail.'
+    required: false
+    default: '0.0'
+  minClassPercent:
+    description: 'Specifies the minimum coverage threshold for classes. If the actual coverage is below this threshold, the action will fail.'
+    required: false
+    default: '0.0'
+runs:
+  using: 'composite'
+  steps:
+    - name: Run Convert-XMLToMarkdown
+      shell: pwsh
+      run: |
+        $params = @{
+          Path = '${{ inputs.path }}'
+          Output = '${{ inputs.output }}'
+          Title = '${{ inputs.title }}'
+          MaxHeadingLevel = [int]${{ inputs.maxHeadingLevel }}
+          MinLinePercent = [double]${{ inputs.minLinePercent }} 
+          MinInstructionPercent = [double]${{ inputs.minInstructionPercent }}
+          MinMethodPercent = [double]${{ inputs.minMethodPercent }}
+          MinClassPercent = [double]${{ inputs.minClassPercent }}
+        }
+
+        .\Convert-XMLToMarkdown.ps1 @params
