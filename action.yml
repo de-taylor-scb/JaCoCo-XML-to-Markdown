@@ -43,6 +43,9 @@ runs:
     - name: Run Convert-XMLToMarkdown
       shell: pwsh
       run: |
+        # set the script path using the github.action_path
+        $scriptPath = Join-Path "${{ github.action_path }}" "Convert-XMLToMarkdown.ps1"
+
         $params = @{
           Path = '${{ inputs.path }}'
           Output = '${{ inputs.output }}'
@@ -53,5 +56,6 @@ runs:
           MinMethodPercent = [double]${{ inputs.minMethodPercent }}
           MinClassPercent = [double]${{ inputs.minClassPercent }}
         }
-
-        .\Convert-XMLToMarkdown.ps1 @params
+        
+        Write-Output $scriptPath
+        $scriptPath @params
