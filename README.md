@@ -1,5 +1,9 @@
 # JaCoCo XML to Markdown (Simple)
 
+## DEPRECATED
+
+This GitHub Action is being deprecated and archived. This is because it has been moved to [Prettify Pester Reports](https://github.com/Stylecraft-Builders/Prettify-Pester-Reports) owned by Stylecraft Builders.
+
 ## Copyright
 This package was created by Dallas Taylor at Stylecraft Builders, and released publicly under a GPLv3 License. This package contains no code or information proprietary to Stylecraft Builders, and has no implied warranty.
 
